@@ -11,10 +11,10 @@ modify	20170301W193858
 wait	50
 notify	NXmouse_notify.png
 KBD	0
-capsturn 90
 |NXmouse]
 
 [NXkbd|
+capspolar 90 16	capslock
 updown 1	nfer
 updown 2	none
 updown 3	xfer

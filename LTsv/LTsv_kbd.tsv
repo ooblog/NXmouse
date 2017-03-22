@@ -87,7 +87,7 @@ capslock:58
 ぬ:1	ふ:2	あ:3	う:4	え:5	お:6	や:7	ゆ:8	よ:9	わ:0	ほ:=	へ:^	￥:|
 た:Q	て:W	い:E	す:R	か:T	ん:Y	な:U	に:I	ら:O	せ:P	゛:@	゜:{
 ち:A	と:S	し:D	は:F	き:G	く:H	ま:J	の:K	り:L	れ:+	け:*	む:}
-つ:Z	さ:X	そ:C	ひ:V	こ:B	み:N	も:M	ね:<	る:>	め:/	ろ:_	　:Space
+つ:Z	さ:X	そ:C	ひ:V	こ:B	み:N	も:M	ね:<	る:>	め:/	ろ:_	　:space
 |LTsv_typegana]
 
 [LTsv_keydefault|
@@ -95,7 +95,7 @@ capslock:58
 た	て	い	す	か	ん	な	に	ら	せ	゛	゜
 ち	と	し	は	き	く	ま	の	り	れ	け	む
 つ	さ	そ	ひ	こ	み	も	ね	る	め	ろ
-NFER	Space	XFER	KANA	MouseL	MouseR	MouseC
+nfer	space	xfer	kana	mousel	mouser	mousec
 |keydefault]
 
 

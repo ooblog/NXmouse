@@ -18,6 +18,7 @@ NXmouse_windowW,NXmouse_windowH=320,240
 NXmouse_notifyname="NXmouse.png"
 NXmouse_wait=1000
 NXmouse_KBD=0
+NXmouse_capspolar,NXmouse_capsmove=0,20
 NXmouse_NXkbd={}
 NXmouse_mouseLCRcount=3
 NXmouse_keepLCRaf=[False for mousecount in range(NXmouse_mouseLCRcount+1)]
@@ -27,6 +28,7 @@ NXmouse_getkbdnamesBF,NXmouse_getkbdnamesAF="",""
 def NXmousenotify_timeK(callback_void=None,callback_ptr=None):
     global NXmouse_getkbdnamesBF,NXmouse_getkbdnamesAF
     global NXmouse_keepLCRbf,NXmouse_keepLCRaf
+    global NXmouse_capspolar,NXmouse_capsmove
     LTsv_setkbddata(20,10); NXmouse_getkbdnamesAF=LTsv_getkbdnames()
     NXmouse_kbdbuf=""
     if NXmouse_KBD != 0 and NXmouse_getkbdnamesBF != NXmouse_getkbdnamesAF:
@@ -39,15 +41,22 @@ def NXmousenotify_timeK(callback_void=None,callback_ptr=None):
                     NXmouse_keepLCRaf[int(NXcmds[1])]=True
                 elif NXcmds[0] == "polar":
                     LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(NXcmds[1],NXcmds[-1]))
+                elif NXcmds[0] == "capspolar":
+                    NXmouse_keepLCRaf[0]=True
+                    if NXmouse_keepLCRbf[0] != NXmouse_keepLCRaf[0]:
+                        NXmouse_capspolar=(NXmouse_capspolar+int(NXcmds[1]))%360
+                        NXmouse_capsmove=int(NXcmds[-1])
+                    LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(NXmouse_capspolar,NXmouse_capsmove))
                 elif NXcmds[0] == "key":
                     LTsv_subprocess("xdotool key {0}".format(NXcmds[1]))
-    for mousecount in range(1,NXmouse_mouseLCRcount+1):
+    for mousecount in range(NXmouse_mouseLCRcount+1):
         if NXmouse_keepLCRbf[mousecount] != NXmouse_keepLCRaf[mousecount]:
             NXmouse_keepLCRbf[mousecount]=NXmouse_keepLCRaf[mousecount]
-            if NXmouse_keepLCRaf[mousecount]:
-                 LTsv_subprocess("xdotool mousedown {0}".format(mousecount))
-            else:
-                 LTsv_subprocess("xdotool mouseup {0}".format(mousecount))
+            if mousecount > 0:
+                if NXmouse_keepLCRaf[mousecount]:
+                     LTsv_subprocess("xdotool mousedown {0}".format(mousecount))
+                else:
+                     LTsv_subprocess("xdotool mouseup {0}".format(mousecount))
         NXmouse_keepLCRaf[mousecount]=False
     LTsv_widget_settext(NXmouse_window,widget_t="NXmouse:"+NXmouse_kbdbuf)
     LTsv_window_after(NXmouse_window,event_b=NXmousenotify_timeK,event_i="NXmousenotify_timeK",event_w=NXmouse_wait)
@@ -61,6 +70,7 @@ def NXmouse_configload():
     NXmouse_wait=min(max(LTsv_intstr0x(LTsv_readlinerest(NXmouse_config,"wait",str(NXmouse_wait))),10),1000)
     NXmouse_notifyname=LTsv_readlinerest(NXmouse_config,"notify",NXmouse_notifyname)
     NXmouse_KBD=min(max(LTsv_intstr0x(LTsv_readlinerest(NXmouse_config,"KBD",str(NXmouse_KBD))),0),1)
+    NXmouse_capsturn=min(max(LTsv_intstr0x(LTsv_readlinerest(NXmouse_config,"KBD",str(NXmouse_KBD))),0),360)
     NXkbd_config=LTsv_getpage(NXmouse_ltsvtext,"NXkbd")
     for NXkbd_configline in NXkbd_config.split('\n'):
         if len(NXkbd_configline) == 0 or not '\t' in NXkbd_configline: continue;
@@ -68,10 +78,10 @@ def NXmouse_configload():
         NXmouse_NXkbd[NXkbd_configline.split('\t')[0]]=NXkbd_configline.split('\t')[1:]
 
 def NXmouse_menu():
-    yield ("「NXmouse」の終了",NXmouse_exit_cbk)
+    yield ("exit NXmouse",NXmouse_exit_cbk)
     yield ("",None)
-    yield ("「NXmouse」の停止",NXmouse_off_cbk)
-    yield ("「NXmouse」の再開",NXmouse_on_cbk)
+    yield ("on",NXmouse_on_cbk)
+    yield ("off",NXmouse_off_cbk)
 
 
 def NXmouse_view(KBD=None):
