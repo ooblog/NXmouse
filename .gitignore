@@ -87,3 +87,20 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# git clone github:ooblog/NXmouse.git
+# git status
+# git push github:ooblog/NXmouse.git master
+# git push github:ooblog/NXmouse.git 20170322W153456
+# git log
+# git ls-files
+# git commit -a -m ""
+# git branch
+# git checkout master
+# git checkout 20170322W153456
+# git merge 20170322W153456
+# git branch -d 20170322W153456
+# git push github:ooblog/NXmouse.git :20170322W153456
+
+
+

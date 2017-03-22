@@ -1,0 +1,22 @@
+[L:Tsv|
+code	UTF-8
+enter	LF
+tab	8
+program	NXmouse
+LTsvver	20161215R220253
+modify	20170301W193858
+|L:Tsv]
+
+[NXmouse|
+wait	50
+notify	NXmouse_notify.png
+kbdL	NFER
+kbdC	None
+kbdR	XFER
+KBD	0
+|NXmouse]
+
+
+# Copyright (c) 2016 ooblog
+# License: MIT
+# https://github.com/ooblog/LTsv9kantray/blob/master/LICENSE
