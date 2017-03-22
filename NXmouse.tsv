@@ -14,7 +14,7 @@ KBD	0
 |NXmouse]
 
 [NXkbd|
-capspolar 90 16	capslock
+capspolar 45 12	capslock
 updown 1	nfer
 updown 2	none
 updown 3	xfer

@@ -18,7 +18,7 @@ NXmouse_windowW,NXmouse_windowH=320,240
 NXmouse_notifyname="NXmouse.png"
 NXmouse_wait=1000
 NXmouse_KBD=0
-NXmouse_capspolar,NXmouse_capsmove=0,20
+NXmouse_capspolar,NXmouse_capsmove,NXmouse_capsacc=0,20,0
 NXmouse_NXkbd={}
 NXmouse_mouseLCRcount=3
 NXmouse_keepLCRaf=[False for mousecount in range(NXmouse_mouseLCRcount+1)]
@@ -28,7 +28,7 @@ NXmouse_getkbdnamesBF,NXmouse_getkbdnamesAF="",""
 def NXmousenotify_timeK(callback_void=None,callback_ptr=None):
     global NXmouse_getkbdnamesBF,NXmouse_getkbdnamesAF
     global NXmouse_keepLCRbf,NXmouse_keepLCRaf
-    global NXmouse_capspolar,NXmouse_capsmove
+    global NXmouse_capspolar,NXmouse_capsmove,NXmouse_capsacc
     LTsv_setkbddata(20,10); NXmouse_getkbdnamesAF=LTsv_getkbdnames()
     NXmouse_kbdbuf=""
     if NXmouse_KBD != 0 and NXmouse_getkbdnamesBF != NXmouse_getkbdnamesAF:
@@ -40,13 +40,18 @@ def NXmousenotify_timeK(callback_void=None,callback_ptr=None):
                 if NXcmds[0] == "updown":
                     NXmouse_keepLCRaf[int(NXcmds[1])]=True
                 elif NXcmds[0] == "polar":
-                    LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(NXcmds[1],NXcmds[-1]))
+                    NXmouse_capspolar=int(NXcmds[1])%360
+                    LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(NXmouse_capspolar,NXcmds[-1]))
                 elif NXcmds[0] == "capspolar":
                     NXmouse_keepLCRaf[0]=True
                     if NXmouse_keepLCRbf[0] != NXmouse_keepLCRaf[0]:
-                        NXmouse_capspolar=(NXmouse_capspolar+int(NXcmds[1]))%360
+                        if NXmouse_keepLCRaf[0] == False:
+                            NXmouse_capspolar=(NXmouse_capspolar+int(NXcmds[1]))%360
                         NXmouse_capsmove=int(NXcmds[-1])
-                    LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(NXmouse_capspolar,NXmouse_capsmove))
+                        NXmouse_capsacc=0
+                    else:
+                        NXmouse_capsacc+=2
+                    LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(NXmouse_capspolar,NXmouse_capsmove+NXmouse_capsacc))
                 elif NXcmds[0] == "key":
                     LTsv_subprocess("xdotool key {0}".format(NXcmds[1]))
     for mousecount in range(NXmouse_mouseLCRcount+1):
