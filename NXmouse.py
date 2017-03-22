@@ -38,7 +38,9 @@ def NXmousenotify_timeK(callback_void=None,callback_ptr=None):
                 if NXcmds[0] == "updown":
                     NXmouse_keepLCRaf[int(NXcmds[1])]=True
                 elif NXcmds[0] == "polar":
-                    LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(NXcmds[1],NXcmds[2]))
+                    LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(NXcmds[1],NXcmds[-1]))
+                elif NXcmds[0] == "key":
+                    LTsv_subprocess("xdotool key {0}".format(NXcmds[1]))
     for mousecount in range(1,NXmouse_mouseLCRcount+1):
         if NXmouse_keepLCRbf[mousecount] != NXmouse_keepLCRaf[mousecount]:
             NXmouse_keepLCRbf[mousecount]=NXmouse_keepLCRaf[mousecount]
@@ -62,6 +64,7 @@ def NXmouse_configload():
     NXkbd_config=LTsv_getpage(NXmouse_ltsvtext,"NXkbd")
     for NXkbd_configline in NXkbd_config.split('\n'):
         if len(NXkbd_configline) == 0 or not '\t' in NXkbd_configline: continue;
+        if not ' ' in NXkbd_configline.split('\t')[0]: continue;
         NXmouse_NXkbd[NXkbd_configline.split('\t')[0]]=NXkbd_configline.split('\t')[1:]
 
 def NXmouse_menu():
