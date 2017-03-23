@@ -14,19 +14,20 @@ KBD	0
 |capsmouse]
 
 [capskbd|
-capspolar 45 12	capslock
+capspolar 90 10	capslock
 updown 1	nfer
 updown 2	kana
 updown 3	xfer
 |capskbd]
 
 #default
-#capspolar 90 12	capslock
+#capspolar 90 10	capslock
 #updown 1	nfer
 #updown 2	kana
 #updown 3	xfer
 
 #debug
+#capspolar 90 10	capslock
 #updown 1	nfer
 #updown 2	none
 #updown 3	xfer
@@ -34,10 +35,10 @@ updown 3	xfer
 #key Right	kana	L
 #key Down	kana	J
 #key Left	kana	H
-#polar 0 20	kana	W
-#polar 90 20	kana	S
-#polar 180 20	kana	Z
-#polar 270 20	kana	A
+#polar 0 10	kana	W
+#polar 90 10	kana	S
+#polar 180 10	kana	Z
+#polar 270 10	kana	A
 
 
 # Copyright (c) 2017 ooblog

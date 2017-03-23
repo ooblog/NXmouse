@@ -18,7 +18,7 @@ capsmouse_windowW,capsmouse_windowH=320,240
 capsmouse_notifyname="capsmouse_notify.png"
 capsmouse_wait=1000
 capsmouse_KBD=0
-capsmouse_polar,capsmouse_move,capsmouse_accel=0,20,0
+capsmouse_polar,capsmouse_turn,capsmouse_move,capsmouse_accel=0,45,20,0
 capsmouse_polarimg=[1,2,5,8,7,6,3,0]
 capsmouse_NXkbd={}
 capsmouse_mouseLCRcount=3
@@ -29,7 +29,7 @@ capsmouse_getkbdnamesBF,capsmouse_getkbdnamesAF="",""
 def capsmousenotify_timeK(callback_void=None,callback_ptr=None):
     global capsmouse_getkbdnamesBF,capsmouse_getkbdnamesAF
     global capsmouse_keepLCRbf,capsmouse_keepLCRaf
-    global capsmouse_polar,capsmouse_move,capsmouse_accel
+    global capsmouse_polar,capsmouse_turn,capsmouse_move,capsmouse_accel
     LTsv_setkbddata(20,10); capsmouse_getkbdnamesAF=LTsv_getkbdnames()
     capsmouse_kbdbuf=""
     if capsmouse_KBD != 0 and capsmouse_getkbdnamesBF != capsmouse_getkbdnamesAF:
@@ -41,23 +41,33 @@ def capsmousenotify_timeK(callback_void=None,callback_ptr=None):
                 if NXcmds[0] == "updown":
                     capsmouse_keepLCRaf[int(NXcmds[1])]=True
                 elif NXcmds[0] == "polar":
-                    capsmouse_polar=int(NXcmds[1])%360; capsmouse_view()
-                    LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(capsmouse_polar,NXcmds[-1]))
-                elif NXcmds[0] == "capspolar":
                     capsmouse_keepLCRaf[0]=True
                     if capsmouse_keepLCRbf[0] != capsmouse_keepLCRaf[0]:
-                        capsmouse_polar=(capsmouse_polar+int(NXcmds[1]))%360; capsmouse_view()
+                        capsmouse_turn=0
+                        capsmouse_polar=int(NXcmds[1])%360; capsmouse_view()
                         capsmouse_move=int(NXcmds[-1])
                         capsmouse_accel=0
                     else:
-                        capsmouse_accel+=2
+                        capsmouse_accel+=max(capsmouse_accel//3,1)
+                    LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(capsmouse_polar,capsmouse_move+capsmouse_accel))
+                elif NXcmds[0] == "capspolar":
+                    capsmouse_keepLCRaf[0]=True
+                    if capsmouse_keepLCRbf[0] != capsmouse_keepLCRaf[0]:
+                        capsmouse_turn=int(NXcmds[1])
+                        capsmouse_move=int(NXcmds[-1])
+                        capsmouse_accel=0
+                    else:
+                        capsmouse_accel+=max(capsmouse_accel//3,1)
                     LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(capsmouse_polar,capsmouse_move+capsmouse_accel))
                 elif NXcmds[0] == "key":
                     LTsv_subprocess("xdotool key {0}".format(NXcmds[1]))
     for mousecount in range(capsmouse_mouseLCRcount+1):
         if capsmouse_keepLCRbf[mousecount] != capsmouse_keepLCRaf[mousecount]:
             capsmouse_keepLCRbf[mousecount]=capsmouse_keepLCRaf[mousecount]
-            if mousecount > 0:
+            if mousecount == 0:
+                if not capsmouse_keepLCRaf[mousecount]:
+                    capsmouse_polar=(capsmouse_polar+capsmouse_turn)%360; capsmouse_view()
+            else:
                 if capsmouse_keepLCRaf[mousecount]:
                      LTsv_subprocess("xdotool mousedown {0}".format(mousecount))
                 else:
@@ -96,8 +106,6 @@ def capsmouse_view(KBD=None):
         for mousecount in range(capsmouse_mouseLCRcount):
             capsmouse_keepLCRbf[mousecount],capsmouse_keepLCRaf[mousecount]=False,False
             LTsv_subprocess("xdotool mouseup {0}".format(mousecount+1))
-#    LTsv_widget_seturi(capsmouse_notifyicon,widget_u="{0}[{1}]".format(capsmouse_notifyname,capsmouse_KBD))
-#    LTsv_widget_seturi(capsmouse_notifyicon,widget_u="{0}[{1}]".format(capsmouse_notifyname,4 if capsmouse_KBD == 0 else capsmouse_polarimg[0]))
     LTsv_widget_seturi(capsmouse_notifyicon,widget_u="{0}[{1}]".format(capsmouse_notifyname,4 if capsmouse_KBD == 0 else capsmouse_polarimg[((capsmouse_polar+22)//45)%8]))
     LTsv_widget_settext(capsmouse_notifyicon,widget_t="capsmouse")
 
