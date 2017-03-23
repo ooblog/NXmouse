@@ -1,8 +1,8 @@
-# capslockでのマウスカーソル移動「capslock(旧名NXmouse)」。
+# capslockでのマウスカーソル移動「capsmouse(旧名NXmouse)」。
 
 capslockキーでマウスカーソルの移動(押し続けると加速)、押す度に方向転換。  
 無変換(nfer)キーで左クリック、かな(kana)キーで中クリック、変換(xfer)キーを押した時に右クリック。  
-設定変更は「NXmouse.tsv」を編集。  
+設定変更は「capsmouse.tsv」を編集。  
 
 
 ## 挙動について。
