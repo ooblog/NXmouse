@@ -1,4 +1,4 @@
-# capslockでのマウスカーソル移動「capsmouse(旧名NXmouse)」。
+# capslockでのマウスカーソル移動「capsmouse」。
 
 capslockキーでマウスカーソルの移動(押し続けると加速)、押す度に方向転換。  
 無変換(nfer)キーで左クリック、かな(kana)キーで中クリック、変換(xfer)キーを押した時に右クリック。  
