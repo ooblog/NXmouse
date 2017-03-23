@@ -14,7 +14,7 @@ KBD	0
 |capsmouse]
 
 [capskbd|
-capspolar 90 12	capslock
+capspolar 45 12	capslock
 updown 1	nfer
 updown 2	kana
 updown 3	xfer

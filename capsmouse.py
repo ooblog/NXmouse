@@ -19,6 +19,7 @@ capsmouse_notifyname="capsmouse_notify.png"
 capsmouse_wait=1000
 capsmouse_KBD=0
 capsmouse_polar,capsmouse_move,capsmouse_accel=0,20,0
+capsmouse_polarimg=[1,2,5,8,7,6,3,0]
 capsmouse_NXkbd={}
 capsmouse_mouseLCRcount=3
 capsmouse_keepLCRaf=[False for mousecount in range(capsmouse_mouseLCRcount+1)]
@@ -40,12 +41,12 @@ def capsmousenotify_timeK(callback_void=None,callback_ptr=None):
                 if NXcmds[0] == "updown":
                     capsmouse_keepLCRaf[int(NXcmds[1])]=True
                 elif NXcmds[0] == "polar":
-                    capsmouse_polar=int(NXcmds[1])%360
+                    capsmouse_polar=int(NXcmds[1])%360; capsmouse_view()
                     LTsv_subprocess("xdotool mousemove_relative --polar {0} {1}".format(capsmouse_polar,NXcmds[-1]))
                 elif NXcmds[0] == "capspolar":
                     capsmouse_keepLCRaf[0]=True
                     if capsmouse_keepLCRbf[0] != capsmouse_keepLCRaf[0]:
-                        capsmouse_polar=(capsmouse_polar+int(NXcmds[1]))%360
+                        capsmouse_polar=(capsmouse_polar+int(NXcmds[1]))%360; capsmouse_view()
                         capsmouse_move=int(NXcmds[-1])
                         capsmouse_accel=0
                     else:
@@ -87,7 +88,6 @@ def capsmouse_menu():
     yield ("on",capsmouse_on_cbk)
     yield ("off",capsmouse_off_cbk)
 
-
 def capsmouse_view(KBD=None):
     global capsmouse_KBD
     global capsmouse_keepLCRbf,capsmouse_keepLCRaf
@@ -96,7 +96,9 @@ def capsmouse_view(KBD=None):
         for mousecount in range(capsmouse_mouseLCRcount):
             capsmouse_keepLCRbf[mousecount],capsmouse_keepLCRaf[mousecount]=False,False
             LTsv_subprocess("xdotool mouseup {0}".format(mousecount+1))
-    LTsv_widget_seturi(capsmouse_notifyicon,widget_u="{0}[{1}]".format(capsmouse_notifyname,capsmouse_KBD))
+#    LTsv_widget_seturi(capsmouse_notifyicon,widget_u="{0}[{1}]".format(capsmouse_notifyname,capsmouse_KBD))
+#    LTsv_widget_seturi(capsmouse_notifyicon,widget_u="{0}[{1}]".format(capsmouse_notifyname,4 if capsmouse_KBD == 0 else capsmouse_polarimg[0]))
+    LTsv_widget_seturi(capsmouse_notifyicon,widget_u="{0}[{1}]".format(capsmouse_notifyname,4 if capsmouse_KBD == 0 else capsmouse_polarimg[((capsmouse_polar+22)//45)%8]))
     LTsv_widget_settext(capsmouse_notifyicon,widget_t="capsmouse")
 
 def capsmouse_switch(window_objvoid=None,window_objptr=None):
@@ -127,12 +129,11 @@ if len(LTsv_GUI) > 0:
         capsmouse_window=LTsv_window_new(event_b=LTsv_hideondelete,widget_t=capsmouse_iconnameAF,widget_w=capsmouse_windowW,widget_h=capsmouse_windowH)
         capsmouse_configload()
         LTsv_label_new(capsmouse_window,widget_t=capsmouse_kbdconfig,widget_x=0,widget_y=0,widget_w=capsmouse_windowW,widget_h=capsmouse_windowH)
-        LTsv_draw_picture_load(capsmouse_notifyname); LTsv_draw_picture_celldiv(capsmouse_notifyname,2,1)
-        capsmouse_notifyicon=LTsv_notifyicon_new(capsmouse_window,widget_t=capsmouse_iconnameAF,widget_u="{0}[{1}]".format(capsmouse_notifyname,capsmouse_KBD),menu_b=capsmouse_menu(),menu_c=capsmouse_switch_cbk)
+        LTsv_draw_picture_load(capsmouse_notifyname); LTsv_draw_picture_celldiv(capsmouse_notifyname,3,3)
+        capsmouse_notifyicon=LTsv_notifyicon_new(capsmouse_window,widget_t=capsmouse_iconnameAF,widget_u="{0}[{1}]".format(capsmouse_notifyname,5-1),menu_b=capsmouse_menu(),menu_c=capsmouse_switch_cbk)
 #        LTsv_widget_showhide(capsmouse_window,True)
         capsmousenotify_timeK()
         LTsv_window_main(capsmouse_window)
-
 
 # Copyright (c) 2017 ooblog
 # License: MIT

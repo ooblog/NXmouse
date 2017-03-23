@@ -88,19 +88,19 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# git clone github:ooblog/NXmouse.git
+# git clone github:ooblog/capsmouse.git
 # git status
-# git push github:ooblog/NXmouse.git master
-# git push github:ooblog/NXmouse.git 20170322W153456
+# git push github:ooblog/capsmouse.git master
+# git push github:ooblog/capsmouse.git 20170323R122604
 # git log
 # git ls-files
 # git commit -a -m ""
 # git branch
 # git checkout master
-# git checkout 20170322W153456
-# git merge 20170322W153456
-# git branch -d 20170322W153456
-# git push github:ooblog/NXmouse.git :20170322W153456
+# git checkout 20170323R122604
+# git merge 20170323R122604
+# git branch -d 20170323R122604
+# git push github:ooblog/capsmouse.git :20170323R122604
 
 
 
