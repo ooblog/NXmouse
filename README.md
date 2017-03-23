@@ -19,4 +19,4 @@ capslockキーでマウスカーソルの移動(押し続けると加速)、押�
 ## ライセンス・著作権など。
 Copyright (c) 2017 ooblog  
 License: MIT  
-[https://github.com/ooblog/NXmouse/blob/master/LICENSE](LICENSE "https://github.com/ooblog/NXmouse/blob/master/LICENSE")  
+[https://github.com/ooblog/capsmouse/blob/master/LICENSE](LICENSE "https://github.com/ooblog/capsmouse/blob/master/LICENSE")  
