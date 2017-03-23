@@ -1,10 +1,14 @@
 # キーボードからのマウス操作補助「NXmouse」。
 
 capslockキーでマウスカーソルの移動(押し続けると加速)、押す度に方向転換。  
-無変換(nfer)キーで左クリック、変換(xfer)キーを押した時に右クリック。  
-kanaキーとASWZの組み合わせでもマウスカーソルの移動可能(等速)。  
+無変換(nfer)キーで左クリック、かな(kana)キーで中クリック、変換(xfer)キーを押した時に右クリック。  
 設定変更は「NXmouse.tsv」を編集。  
 キーロックの類は一切してないのでマウス操作のつもりが文字入力される場合があることに注意。  
+
+
+## リポジトリ名とファイル名の違いについて。
+
+元々「NXmouse」という名前で開発→気が付くとcapslockのマウス移動が本体になる→リポジトリ名も「capsmouse」に変更予定。  
 
 
 ## 動作環境。
@@ -14,7 +18,6 @@ kanaキーとASWZの組み合わせでもマウスカーソルの移動可能(�
 
 
 ## ライセンス・著作権など。
-11
 Copyright (c) 2017 ooblog  
 License: MIT  
 [https://github.com/ooblog/NXmouse/blob/master/LICENSE](LICENSE "https://github.com/ooblog/NXmouse/blob/master/LICENSE")  

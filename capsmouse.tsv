@@ -7,13 +7,13 @@ LTsvver	20161215R220253
 modify	20170301W193858
 |L:Tsv]
 
-[NXmouse|
+[capsmouse|
 wait	50
-notify	NXmouse_notify.png
+notify	capsmouse_notify.png
 KBD	0
-|NXmouse]
+|capsmouse]
 
-[NXkbd|
+[capskbd|
 capspolar 45 12	capslock
 updown 1	nfer
 updown 2	none
@@ -26,7 +26,7 @@ polar 0 20	kana	W
 polar 90 20	kana	S
 polar 180 20	kana	Z
 polar 270 20	kana	A
-|NXkbd]
+|capskbd]
 
 
 # Copyright (c) 2017 ooblog
