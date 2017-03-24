@@ -101,6 +101,6 @@ ENV/
 # git merge 20170323R122604
 # git branch -d 20170323R122604
 # git push github:ooblog/capsmouse.git :20170323R122604
-
+NXmouse/
 
 

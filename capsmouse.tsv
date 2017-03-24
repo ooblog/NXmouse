@@ -8,7 +8,8 @@ modify	20170301W193858
 |L:Tsv]
 
 [capsmouse|
-wait	50
+lockwait	2000
+mousewait	50
 notify	capsmouse_notify.png
 KBD	0
 |capsmouse]
@@ -27,7 +28,7 @@ updown 3	xfer
 #updown 3	xfer
 
 #debug
-#capspolar 90 10	capslock
+#capspolar 45 10	capslock
 #updown 1	nfer
 #updown 2	none
 #updown 3	xfer

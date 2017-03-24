@@ -16,9 +16,9 @@ from LTsv_gui    import *
 capsmouse_ltsvname,capsmouse_ltsvtext,capsmouse_config,capsmouse_kbdconfig="capsmouse.tsv","","",""
 capsmouse_windowW,capsmouse_windowH=320,240
 capsmouse_notifyname="capsmouse_notify.png"
-capsmouse_wait=1000
+capsmouse_lockwait,capsmouse_mousewait=1000,50
 capsmouse_KBD=0
-capsmouse_polar,capsmouse_turn,capsmouse_move,capsmouse_accel=0,45,20,0
+capsmouse_polar,capsmouse_turn,capsmouse_move,capsmouse_accel=0,90,10,0
 capsmouse_polarimg=[1,2,5,8,7,6,3,0]
 capsmouse_NXkbd={}
 capsmouse_mouseLCRcount=3
@@ -74,15 +74,16 @@ def capsmousenotify_timeK(callback_void=None,callback_ptr=None):
                      LTsv_subprocess("xdotool mouseup {0}".format(mousecount))
         capsmouse_keepLCRaf[mousecount]=False
     LTsv_widget_settext(capsmouse_window,widget_t="capsmouse:"+capsmouse_kbdbuf)
-    LTsv_window_after(capsmouse_window,event_b=capsmousenotify_timeK,event_i="capsmousenotify_timeK",event_w=capsmouse_wait)
+    LTsv_window_after(capsmouse_window,event_b=capsmousenotify_timeK,event_i="capsmousenotify_timeK",event_w=capsmouse_mousewait if capsmouse_KBD != 0 else capsmouse_lockwait)
 
 def capsmouse_configload():
     global capsmouse_ltsvname,capsmouse_ltsvtext,capsmouse_config
-    global capsmouse_notifyname,capsmouse_wait,capsmouse_KBD
+    global capsmouse_notifyname,capsmouse_lockwait,capsmouse_mousewait,capsmouse_KBD
     global capsmouse_kbdconfig,capsmouse_NXkbd
     capsmouse_ltsvtext=LTsv_loadfile(capsmouse_ltsvname)
     capsmouse_config=LTsv_getpage(capsmouse_ltsvtext,"capsmouse")
-    capsmouse_wait=min(max(LTsv_intstr0x(LTsv_readlinerest(capsmouse_config,"wait",str(capsmouse_wait))),10),1000)
+    capsmouse_lockwait=min(max(LTsv_intstr0x(LTsv_readlinerest(capsmouse_config,"lockwait",str(capsmouse_lockwait))),100),2000)
+    capsmouse_mousewait=min(max(LTsv_intstr0x(LTsv_readlinerest(capsmouse_config,"mousewait",str(capsmouse_mousewait))),10),1000)
     capsmouse_notifyname=LTsv_readlinerest(capsmouse_config,"notify",capsmouse_notifyname)
     capsmouse_KBD=min(max(LTsv_intstr0x(LTsv_readlinerest(capsmouse_config,"KBD",str(capsmouse_KBD))),0),1)
     capsmouse_capsturn=min(max(LTsv_intstr0x(LTsv_readlinerest(capsmouse_config,"KBD",str(capsmouse_KBD))),0),360)
@@ -142,6 +143,7 @@ if len(LTsv_GUI) > 0:
 #        LTsv_widget_showhide(capsmouse_window,True)
         capsmousenotify_timeK()
         LTsv_window_main(capsmouse_window)
+
 
 # Copyright (c) 2017 ooblog
 # License: MIT
